@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BethanysPieShop.Models;
+using BethanysPieShop.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,20 @@ namespace BethanysPieShop.Controllers
 {
     public class PieController : Controller
     {
-        public IActionResult Index()
+        private readonly IPieRepository _pieRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        public PieController(IPieRepository pieRepository, ICategoryRepository categoryRepository)
         {
-            return View();
+            _pieRepository = pieRepository;
+            _categoryRepository = categoryRepository;
+        }
+        public ViewResult List ()
+        {
+            PiesListViewModel piesListViewModel = new PiesListViewModel();
+            piesListViewModel.Pies = _pieRepository.AllPies;
+
+            piesListViewModel.CurrentCategory = "Cheese cakes";
+            return View(piesListViewModel);
         }
     }
 }
