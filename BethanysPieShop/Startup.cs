@@ -30,6 +30,9 @@ namespace BethanysPieShop
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddControllersWithViews();
+
+            services.AddControllersWithViews(x => x.SuppressAsyncSuffixInActionNames = false)
+            .AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
